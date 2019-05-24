@@ -1,9 +1,19 @@
 
 const Joi = require('joi');
+const morgan = require('morgan');
+const helmet = require('helmet');
 const express = require('express');
+const logger = require('./logger');
+const authenticate = require('./authenticator');
 const app = express();
 
+app.use(helmet());
+app.use(morgan('tiny'));
 app.use(express.json());
+app.use(authenticate);
+app.use(logger);
+
+// app.use(authenticate);
 
 const courses = [
     { id: 1, name: 'course1'},
